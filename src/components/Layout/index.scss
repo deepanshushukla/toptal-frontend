@@ -1,0 +1,40 @@
+.mainLayout{
+  height: 100vh;
+  overflow: auto;
+  &__logo{
+    color:#ffffff;
+  }
+  & .trigger {
+    padding: 0 24px;
+    font-size: 18px;
+    line-height: 64px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  &__content {
+    &-background {
+      background: #fff;
+    }
+    & .ant-layout-header{
+      height: 64px;
+      padding: 0 33px;
+      color: rgba(0, 0, 0, 0.85);
+      line-height: 64px;
+      background: #001529;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+  }
+  }
+}
+
+
+.mainLayout .trigger:hover {
+  color: #1890ff;
+}
+
+#components-layout-demo-custom-trigger .logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
+}

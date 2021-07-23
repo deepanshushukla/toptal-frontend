@@ -1,25 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+    BrowserRouter as Router,
+    Route,
+    Redirect,
+    Switch,
+} from 'react-router-dom';
+import { DASHBOARD,USERS, NAVIGATION_PATH, AUTH } from 'constants/navigationPath';
+
+//stylesheets
+import 'antd/dist/antd.css';
+import './App.scss';
+
+//components
+import Authentication from 'modules/Authentication';
+import Dashboard from 'modules/Dashboard';
+import Users from 'modules/Users';
+import ProtectedRoute from 'components/ProtectedRoute';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Router>
+          <Switch>
+              <Route path={NAVIGATION_PATH[AUTH].path} component={Authentication}/>
+              <ProtectedRoute path={NAVIGATION_PATH[DASHBOARD].path} component={Dashboard}/>
+              <ProtectedRoute path={NAVIGATION_PATH[USERS].path} component={Users}/>
+              <Redirect to="/dashboard" />
+          </Switch>
+      </Router>
   );
 }
 
