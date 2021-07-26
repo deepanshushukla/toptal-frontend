@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from "react-router";
 
-import {
-    Redirect,
-    useLocation,
-} from 'react-router-dom'
-import { Form, Input, Button ,Select } from 'antd';
+import {Form, Input, Button, Select, Row, Col} from 'antd';
 import { userSignup} from '../../../services/authenticationService';
-import { setAuthDetailsLS } from 'helpers/authHelper';
+import {mobileValidator} from "../../../helpers/mobileNoValidator";
 
 //style
 import './index.scss';
-import {mobileValidator} from "../../../helpers/mobileNoValidator";
+import {Link} from "react-router-dom";
 
 const { Option } = Select;
 
@@ -28,81 +24,104 @@ const history = useHistory();
         }
     };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
     return (
-        <div className='loginContainer'>
-            <Form
-                name = "Sigup Form"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-            >
-                <Form.Item
-                    label="FirstName"
-                    name="firstName"
-                    rules={[{ required: true,  message: 'Required Field!' }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="LastName"
-                    name="lastName"
-                    rules={[{ required: true,  message: 'Required Field!' }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Phone Number"
-                    onKeyPress={(event) => {
-                        if (!/[0-9]/.test(event.key)) {
-                            event.preventDefault();
-                        }
-                    }}
-                    name="phoneNumber"
-                    rules={[
-                        {
-                            validator: mobileValidator,
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Email"
-                    name="email"
-                    rules={[{ required: true, type: "email", message: 'Please input  valid email!' }]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
-                >
-                    <Input.Password />
-                </Form.Item>
-
-                <Form.Item name="role" label="Role" rules={[{ required: true }]}>
-                    <Select
-                        placeholder="Select Role"
-                        allowClear
+        <div className='container'>
+            <div className="loginWrapper">
+                <div className="loginFormContainer">
+                    <h1 className="loginHeading">Signup</h1>
+                    <Form
+                        name="signup"
+                        className="loginForm"
+                        labelAlign="left"
+                        layout="vertical"
+                        onFinish={onFinish}
                     >
-                        <Option value="client">Client</Option>
-                        <Option value="realtor">Realtor</Option>
-                    </Select>
-                </Form.Item>
+                        <Row className={'inlineFormItem'}>
+                            <Col span={10}> <Form.Item
+                                label="First Name"
+                                name="firstName"
+                                rules={[{ required: true,  message: 'Required Field!' }]}
+                            >
+                                <Input />
+                            </Form.Item></Col>
+                            <Col span={10}>
+                                <Form.Item
+                                    label="Last Name"
+                                    name="lastName"
+                                    rules={[{ required: true,  message: 'Required Field!' }]}
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Form.Item
+                            label="Phone Number"
+                            onKeyPress={(event) => {
+                                if (!/[0-9]/.test(event.key)) {
+                                    event.preventDefault();
+                                }
+                            }}
+                            name="phoneNumber"
+                            rules={[
+                                {
+                                    validator: mobileValidator,
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Email"
+                            name="email"
+                            rules={[{ required: true, type: "email", message: 'Please input  valid email!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
 
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
+                        <Form.Item
+                            label="Password"
+                            name="password"
+                            rules={[{ required: true, message: 'Please input your password!' }]}
+                        >
+                            <Input.Password />
+                        </Form.Item>
+
+                        <Form.Item name="role" label="Role" rules={[{ required: true }]}>
+                            <Select
+                                placeholder="Select Role"
+                                allowClear
+                            >
+                                <Option value="client">Client</Option>
+                                <Option value="realtor">Realtor</Option>
+                            </Select>
+                        </Form.Item>
+
+                        <Form.Item
+                            wrapperCol={{
+                                span: 24
+                            }}
+                        >
+                            <Button className="submitBtn" type="primary" htmlType="submit">
+                                Submit
+                            </Button>
+                            <Row className="linksWrapper">
+                                <Col>
+                                    <Link to="/auth/forgotPassword" >
+                                        <Button className="commonLoginLink" type="link">Forgot your password?
+                                        </Button>
+                                    </Link>
+                                </Col>
+                                <Col>
+                                    <Link to="/auth/signin" >
+                                        <Button className="commonLoginLink" type="link">Already have an account? Sign in
+                                        </Button>
+                                    </Link>
+                                </Col>
+                            </Row>
+                        </Form.Item>
+                    </Form>
+                </div>
+            </div>
         </div>
     )
 };

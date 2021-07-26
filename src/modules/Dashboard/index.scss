@@ -1,0 +1,36 @@
+$containerHeight : calc(100vh - 170px) ;
+.dashbaordContainer{
+  & .ant-page-header{
+    padding: 4px 24px;
+  }
+  & .apartmentList .ant-list-items{
+    height: calc(100vh - 178px) !important;
+    overflow: scroll;
+   & .ant-list-item {
+      padding: 0px 24px;
+      margin-bottom: 8px;
+    }
+  }
+
+  & .ant-list-pagination {
+    margin-top: 8px;
+    text-align: right;
+  }
+  & .apartmentEmpty__Container{
+    height: $containerHeight ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  .title {
+    color:#000000;
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+.leaflet-container {
+  width: 100%;
+  padding-top: 16px;
+  height: $containerHeight;
+}

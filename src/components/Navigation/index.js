@@ -1,11 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { useHistory, useLocation } from 'react-router-dom';
 import {Layout, Menu} from 'antd';
-
-import Icon ,{
-    MenuUnfoldOutlined,
-    MenuFoldOutlined,
-} from '@ant-design/icons';
+import Icon  from '@ant-design/icons';
 
 import { INAPP_NAVIGATION_ITEMS } from "constants/navigation";
 import UserContext from "../../context/userContext";
@@ -38,10 +34,6 @@ const Navigation = () => {
         <Sider trigger={null} collapsible collapsed={collapsed}>
             <div className="mainLayout__logo" >
                 <span>Toptal</span>
-                {/*{React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {*/}
-                {/*    className: 'trigger',*/}
-                {/*    onClick: toggle,*/}
-                {/*})}*/}
             </div>
 
             <Menu theme="dark" mode="inline" selectedKeys={[selectedKey]} onClick={onClickMenu}>

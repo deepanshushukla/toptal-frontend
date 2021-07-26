@@ -1,8 +1,6 @@
 
 .container {
-  //background: #001529;
-  background: url('../../images/background.png') no-repeat center center fixed;
-  background-size: cover;
+  background: #001529;
   width: 100%;
 
   & .loginWrapper {
@@ -19,7 +17,7 @@
       width: 100%;
 
       & .loginHeading {
-        color: #204ecf;
+        color: #001529;
         font-weight: 600;
         text-align: center;
         padding-top: 12px;

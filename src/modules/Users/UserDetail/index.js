@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { Drawer, Form, Button, Col, Row, Input, Select, Spin } from 'antd';
 import { USER_ROLES } from 'constants/userRoles'
 import { mobileValidator } from '../../../helpers/mobileNoValidator'
+import {allowOnlyNumber} from '../../../helpers/allowOnlyNumber'
+
 const { Option } = Select;
 
 const UserDetail = ({visible, initialValue, setDrawerVisibility,onSubmitUser}) => {
@@ -83,13 +85,9 @@ const UserDetail = ({visible, initialValue, setDrawerVisibility,onSubmitUser}) =
                     <Col span={12}>
                         <Form.Item
                             label="Phone Number"
-                            onKeyPress={(event) => {
-                                if (!/[0-9]/.test(event.key)) {
-                                    event.preventDefault();
-                                }
-                            }}
+                            onKeyPress={allowOnlyNumber}
                             name="phoneNumber"
-
+                            placeholder="Phone Number"
                             rules={[
                                 {
                                     validator: mobileValidator,
@@ -103,6 +101,7 @@ const UserDetail = ({visible, initialValue, setDrawerVisibility,onSubmitUser}) =
                         <Form.Item
                             label="Email"
                             name="email"
+                            placeholder="Email "
                             rules={[{ required: true, type: "email", message: 'Please input  valid email!' }]}
                         >
                             <Input />
@@ -117,7 +116,7 @@ const UserDetail = ({visible, initialValue, setDrawerVisibility,onSubmitUser}) =
                             rules={[{ required: true, message: 'Please choose Role' }]}
                         >
                             <Select placeholder="Please choose Role">
-                                {Object.keys(USER_ROLES).map((role)=><Option value={role}>{USER_ROLES[role].display}</Option>)}
+                                {Object.keys(USER_ROLES).map((role)=><Option key={role} value={role}>{USER_ROLES[role].display}</Option>)}
                             </Select>
                         </Form.Item>
                     </Col>

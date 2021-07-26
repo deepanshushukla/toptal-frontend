@@ -1,5 +1,5 @@
-import {Space, Tag} from "antd";
 import React from "react";
+import {Tag} from "antd";
 import { USER_ROLES }  from 'constants/userRoles';
 
 export const USERS_COLUMN = [
@@ -13,9 +13,9 @@ export const USERS_COLUMN = [
         dataIndex: 'name',
         key: 'firstName',
         render: (text, record) => (
-            <Space size="middle">
-                <a>{record.firstName} {record.lastName}</a>
-            </Space>
+            <p>
+                {record.firstName} {record.lastName}
+            </p>
         ),
     },
     {
@@ -38,10 +38,4 @@ export const USERS_COLUMN = [
 export const USERS_ACTION_COLUMN = {
     title: 'Action',
     key: 'action',
-    render: (text, record) => (
-        <Space size="middle">
-            <a>Edit</a>
-            <a>Delete</a>
-        </Space>
-    ),
 }

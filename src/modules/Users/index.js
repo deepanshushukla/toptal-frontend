@@ -1,12 +1,19 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {Table, PageHeader, Button, Space, Popconfirm, Modal} from 'antd';
+import React, {useCallback, useContext, useEffect, useState} from "react";
+import {Table, Button, Space, Modal} from 'antd';
 import  {
     ExclamationCircleOutlined,
 } from '@ant-design/icons';
+//components
 import UserDetail from './UserDetail'
 import LoadingSpinner from '../../components/LoadingSpinner'
-import { USERS_COLUMN, USERS_ACTION_COLUMN } from './constants/userColumns'
+import Header from "../../components/Header";
+//services
 import { getAllUsers, saveUser, updateUser, deleteUser } from 'services/usersService'
+//context
+import UserContext from "../../context/userContext";
+//constants
+import { USERS_COLUMN, USERS_ACTION_COLUMN } from './constants/userColumns'
+import {ADMIN} from "../../constants/userRoles";
 
 
 const { confirm } = Modal;
@@ -15,6 +22,7 @@ const Users = () => {
     const [loader, setLoader] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const [drawerVisible, setDrawerVisibility] = useState(false);
+    const loggedInUser = useContext(UserContext)
     const fetchUserData = useCallback(async () => {
         setUsersData(null);
         setLoader(true);
@@ -73,28 +81,21 @@ const Users = () => {
     USERS_ACTION_COLUMN.render = (text, record) => {
         return (
             <Space size="middle">
-                <a onClick={()=>editUser(record)}>Edit</a>
-                <a onClick={()=>showDeleteConfirm(record)}>
-                        Delete
-                    </a>
-            </Space> )
+                <Button onClick={()=>editUser(record)} type="link">Edit</Button>
+                <Button onClick={()=>showDeleteConfirm(record)} type="link">Delete</Button>
+            </Space>
+        )
     };
-
+    const columns =  loggedInUser.role === ADMIN ? [...USERS_COLUMN,USERS_ACTION_COLUMN] :[...USERS_COLUMN];
     return (
-
         <div className='usersContainer'>
             {loader && <LoadingSpinner/>}
-            <PageHeader
-                ghost={false}
-                title="Users"
-                extra={[
-                    <Button key="1" type="primary" onClick={createUser}>
-                        Create User
-                    </Button>
-                ]}
-            />
+            <Header title='Users' right={
+                loggedInUser.role === ADMIN ? <Button key="1" type="primary" onClick={createUser}>
+                    Create User
+                </Button>:null}/>
             <UserDetail visible={drawerVisible} onSubmitUser={onSubmitUser} setDrawerVisibility={setDrawerVisibility} initialValue={selectedItem}/>
-            <Table columns={[...USERS_COLUMN,USERS_ACTION_COLUMN]} dataSource={usersData} scroll={{ y:480 }}/>
+            <Table columns={columns} dataSource={usersData} scroll={{ y:480 }}/>
        </div>
     );
 };

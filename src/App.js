@@ -12,19 +12,20 @@ import 'antd/dist/antd.css';
 import './App.scss';
 
 //components
-import Authentication from 'modules/Authentication';
-import Dashboard from 'modules/Dashboard';
+import Authentication from 'modules/Authentication/index';
+import Dashboard from 'modules/Dashboard/index';
 import Users from 'modules/Users';
 import ProtectedRoute from 'components/ProtectedRoute';
 
-function App() {
-  return (
+const App = () => {
+    return (
       <Router>
+
           <Switch>
               <Route path={NAVIGATION_PATH[AUTH].path} component={Authentication}/>
               <ProtectedRoute path={NAVIGATION_PATH[DASHBOARD].path} component={Dashboard}/>
               <ProtectedRoute path={NAVIGATION_PATH[USERS].path} component={Users}/>
-              <Redirect to="/dashboard" />
+              <Redirect to={NAVIGATION_PATH[DASHBOARD].path} />
           </Switch>
       </Router>
   );

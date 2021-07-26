@@ -1,0 +1,20 @@
+.rangeFilterConatiner{
+  position: relative;
+  & .rangeOverlay{
+    position: absolute;
+    width: 380px;
+    height: 180px;
+    padding: 12px 36px;
+    border: 1px solid #efdddd;
+    top: 35px;
+    z-index: 9999;
+    background: white;
+    & .ant-alert{
+      padding: 0 15px;
+      margin-bottom: 8px;
+    }
+    & .ant-input-group.ant-input-group-compact{
+      margin-bottom: 10px;
+    }
+  }
+}
