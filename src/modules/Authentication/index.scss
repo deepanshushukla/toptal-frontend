@@ -4,7 +4,16 @@
   background: url('../../images/background.png') no-repeat center center fixed;
   background-size: cover;
   width: 100%;
-
+  & .ant-spin-dot-item{
+    background-color:#ffffff ;
+  }
+  & .ant-spin-nested-loading > div > .ant-spin .ant-spin-text{
+    color:#ffffff;
+    font-size: 16px;
+  }
+  & .ant-alert{
+    padding: 4px 14px;
+  }
   & .loginWrapper {
     width: 40%;
     max-width: 50%;
@@ -12,6 +21,9 @@
     height: 100vh;
     display: flex;
     align-items: center;
+    & .ant-spin-nested-loading{
+      width:100%
+    }
 
     & .loginFormContainer {
       background: #fff;
@@ -52,6 +64,7 @@
           width: 100%;
           display: block;
           margin-bottom: 10px;
+          margin-top: 6px;
           border: none;
         }
         & .linksWrapper {

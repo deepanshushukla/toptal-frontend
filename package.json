@@ -55,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "prettier": "^2.3.2",
     "react-app-rewire-babel-loader": "^0.1.1",
     "react-app-rewired": "^2.1.8"
   }

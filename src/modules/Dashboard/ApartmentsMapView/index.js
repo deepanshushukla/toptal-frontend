@@ -1,23 +1,25 @@
 import React, {useState, useEffect, useCallback} from 'react'
-import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
+import {MapContainer, Marker, Popup, TileLayer, useMapEvents} from "react-leaflet";
 import ApartmentSummary from "../components/ApartmentSummary";
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
+import 'leaflet/dist/leaflet.css'
 import './index.scss';
 let DefaultIcon = L.icon({
     iconUrl: icon,
-    shadowUrl: iconShadow
+    shadowUrl: iconShadow,
+    iconSize: [ 25, 41 ],
+    iconAnchor: [ 13, 41 ],
+    tooltipAnchor: [ 0, -41 ]
 });
 L.Marker.prototype.options.icon = DefaultIcon;
-
 
 const ApartmentsMapView = ({apartments}) => {
     const [mapCenter, setMapCenter] = useState([]);
     const [mapBounds, setMapBounds] = useState([]);
     const getCenter = useCallback(()=>{
-
         let minLat = 10000000, maxLong = -10000000 , bounds= [];
         apartments.forEach((item)=>{
             const {lat,long} = item.geoLocation;

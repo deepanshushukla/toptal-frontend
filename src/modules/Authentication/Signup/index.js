@@ -1,32 +1,42 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from "react-router";
+import {Form, Input, Button, Select, Row, Col, message, Spin, Alert} from 'antd';
+import {Link} from "react-router-dom";
 
-import {Form, Input, Button, Select, Row, Col} from 'antd';
 import { userSignup} from '../../../services/authenticationService';
 import {mobileValidator} from "../../../helpers/mobileNoValidator";
+//constants
+import {SIGNUP_SUCCESS, SOMETHING_WENT_WRONG} from "../../../constants/messages";
 
 //style
 import './index.scss';
-import {Link} from "react-router-dom";
+
 
 const { Option } = Select;
 
-const  Signup= () => {
-const history = useHistory();
+const  Signup = () => {
+    const [isLoading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const history = useHistory();
+
     const onFinish = async (values) => {
-        console.log('Success:', values);
+        setLoading(true);
         try {
-            const userData = await userSignup(values);
-            history.push('/dashboard')
+            await userSignup(values);
+            setLoading(false);
+            message.success(SIGNUP_SUCCESS,1).then(()=>{
+                history.push('/auth/signin')
+            });
         }
         catch(e){
-            console.log(e)
+            setLoading(false);
+            setError(e.message  || SOMETHING_WENT_WRONG);
         }
     };
-
     return (
         <div className='container'>
             <div className="loginWrapper">
+                <Spin tip={'Registering'} spinning={isLoading}>
                 <div className="loginFormContainer">
                     <h1 className="loginHeading">Signup</h1>
                     <Form
@@ -95,7 +105,11 @@ const history = useHistory();
                                 <Option value="realtor">Realtor</Option>
                             </Select>
                         </Form.Item>
-
+                        {error && <Row className={'inlineFormItem'}>
+                            <Col span={24}>
+                                <Alert message={error} closable type="error" showIcon />
+                            </Col>
+                        </Row> }
                         <Form.Item
                             wrapperCol={{
                                 span: 24
@@ -120,7 +134,8 @@ const history = useHistory();
                             </Row>
                         </Form.Item>
                     </Form>
-                </div>
+                    </div>
+                </Spin>
             </div>
         </div>
     )

@@ -20,7 +20,6 @@ import { CLIENT } from '../../constants/userRoles'
 
 //css
 import './index.scss'
-import 'leaflet/dist/leaflet.css'
 
 const { confirm } = Modal;
 const showTotal = (total) => {
@@ -58,18 +57,9 @@ const Dashboard = () => {
         setSelectedItem(record);
         setDrawerVisibility(true);
     };
-    const onSubmitApartment = async (payload) => {
-        try {
-            if(payload.id){
-                await updateApartment(payload.id, payload);
-            }else{
-                await saveApartment(payload);
-            }
-            fetchApartmentData();
-            setDrawerVisibility(false);
-        } catch(e) {
-            console.log(e);
-        }
+    const onSubmitApartment = async () => {
+        fetchApartmentData();
+        setDrawerVisibility(false);
     };
     const createApartment = ()=>{
         setSelectedItem(null);

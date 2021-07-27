@@ -1,20 +1,34 @@
-import { Form, Input, Button  } from 'antd';
+import React, {useEffect, useState} from "react";
+import {Form, Input, Button, message, Spin, Row, Col, Alert} from 'antd';
 import {useParams} from 'react-router-dom';
-import {resetPassword} from '../../../services/authenticationService'
-import React, {useEffect} from "react";
+import {resetPassword} from '../../../services/authenticationService';
+import {SOMETHING_WENT_WRONG, PASSWORD_CHNAGED_SUCCESSFULLY, TOKEN_NOT_PRESENT} from "../../../constants/messages";
+import {useHistory} from "react-router";
 const Resetpassword = () => {
+    const [isLoading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const history = useHistory();
     const { token } = useParams();
     useEffect(() => {
         if(!token){
-            alert('Token is not present in the url')
+            message.error(TOKEN_NOT_PRESENT,2);
         }
     },[token]);
     const onFinish = async (values) => {
+        if(!token){
+            message.error(TOKEN_NOT_PRESENT,2);
+            return ;
+        }
+        setLoading(true);
         try {
             const res= await resetPassword({...values,token});
-            console.log(res)
+            setLoading(false)
+            message.success(res.message || PASSWORD_CHNAGED_SUCCESSFULLY,2).then(()=>{
+                history.push('/auth/login');
+            });
         }catch(e){
-            console.log(e)
+            setLoading(false);
+            setError(e.message || SOMETHING_WENT_WRONG)
         }
     };
 
@@ -22,8 +36,9 @@ const Resetpassword = () => {
     return (
         <div className='container'>
             <div className="loginWrapper">
+                <Spin tip={'Resetting Password'} spinning={isLoading}>
                 <div className="loginFormContainer">
-                    <h1 className="loginHeading">Forgot Password</h1>
+                    <h1 className="loginHeading">Reset Password</h1>
                     <Form
                         name="forgotPassword"
                         className="loginForm"
@@ -57,6 +72,11 @@ const Resetpassword = () => {
                         >
                             <Input.Password placeholder='Confirm Password' />
                         </Form.Item>
+                        {error && <Row className={'inlineFormItem'}>
+                            <Col span={24}>
+                                <Alert message={error} closable type="error" showIcon />
+                            </Col>
+                        </Row> }
                         <Form.Item
                             wrapperCol={{
                                 span: 24
@@ -68,6 +88,7 @@ const Resetpassword = () => {
                         </Form.Item>
                     </Form>
                 </div>
+                </Spin>
             </div>
         </div>
     );

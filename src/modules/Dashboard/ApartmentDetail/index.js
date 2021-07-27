@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Drawer, Form, Button, Col, Row, Input, Spin, Switch, Divider, Select,Modal ,AutoComplete}from 'antd';
+import {Drawer, Form, Button, Col, Row, Input, Spin, Switch, Divider, Select, Modal, AutoComplete, message} from 'antd';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import {  saveApartment, updateApartment } from 'services/apartmentService';
+
 import {allowOnlyNumber} from '../../../helpers/allowOnlyNumber'
 import { NO_OF_ROOMS} from "../../../constants/filterConfig";
+import {SOMETHING_WENT_WRONG, APARTMENT_SAVED_SUCCESS} from "../../../constants/messages";
 
 const { Option } = Select;
 const openStreetProvider = new OpenStreetMapProvider();
@@ -10,7 +13,8 @@ const openStreetProvider = new OpenStreetMapProvider();
 
 const ApartmentDetail = ({visible, initialValue, setDrawerVisibility,onSubmitUser}) => {
     const [form] = Form.useForm();
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [autoCompleteData, setAutoCompleteData] = useState([]);
     useEffect(()=>{
         if(!visible){
@@ -39,18 +43,34 @@ const ApartmentDetail = ({visible, initialValue, setDrawerVisibility,onSubmitUse
 
     };
     const onAutoCompleteSelect = (value, option) => {
+        console.log(value,option)
         form.setFieldsValue({geoLocation:{
-                lat:option.x,
-                long:option.y
+                lat:option.y,
+                long:option.x
         }});
-    }
+    };
     const onFinish = (values) =>{
         const { id } = initialValue || {};
-        setLoading(true);
-        onSubmitUser({...values, id});
+        createApartment({...values, id});
     };
+    const createApartment = async (payload) =>{
+        setLoading(true);
+        try {
+            if(payload.id){
+               await updateApartment(payload.id, payload);
+            }else{
+               await saveApartment(payload);
+            }
+            setLoading(false);
+            message.success(APARTMENT_SAVED_SUCCESS,2).then(()=>{
+                onSubmitUser()
+            })
+        } catch(e) {
+            setLoading(false);
+            setError(e.message || SOMETHING_WENT_WRONG)
+        }
+    }
     return (
-        <Spin spinning={false}>
             <Drawer
                 title="Add Apartment"
                 width={520}
@@ -74,6 +94,8 @@ const ApartmentDetail = ({visible, initialValue, setDrawerVisibility,onSubmitUse
                     </div>
                 }
             >
+                <Spin tip={'Saving Apartment Detail'} spinning={isLoading}>
+
                 <Form layout="vertical"
                       form={form}
                       onFinish={onFinish}
@@ -103,7 +125,7 @@ const ApartmentDetail = ({visible, initialValue, setDrawerVisibility,onSubmitUse
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item
-                                label="Floor Area "
+                                label="Floor Area (Sqft)"
                                 onKeyPress={allowOnlyNumber}
                                 rules={[{ required: true, message: 'Floor Area required' }]}
                                 name="floorAreaSize"
@@ -114,7 +136,7 @@ const ApartmentDetail = ({visible, initialValue, setDrawerVisibility,onSubmitUse
                         </Col>
                         <Col span={12}>
                             <Form.Item
-                                label="Price Per Month"
+                                label="Price Per Month (INR)"
                                 name="pricePerMonth"
                                 placeholder="Price per month"
                                 onKeyPress={allowOnlyNumber}
@@ -182,8 +204,9 @@ const ApartmentDetail = ({visible, initialValue, setDrawerVisibility,onSubmitUse
                         </Col>
                     </Row>
                 </Form>
+                </Spin>
+
             </Drawer>
-        </Spin>
     )
 
 };
