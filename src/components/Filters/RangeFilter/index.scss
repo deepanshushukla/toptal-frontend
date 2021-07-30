@@ -1,6 +1,6 @@
-.rangeFilterConatiner{
+.rangeFilterConatiner {
   position: relative;
-  & .rangeOverlay{
+  & .rangeOverlay {
     position: absolute;
     width: 380px;
     height: 180px;
@@ -9,11 +9,11 @@
     top: 35px;
     z-index: 9999;
     background: white;
-    & .ant-alert{
+    & .ant-alert {
       padding: 0 15px;
       margin-bottom: 8px;
     }
-    & .ant-input-group.ant-input-group-compact{
+    & .ant-input-group.ant-input-group-compact {
       margin-bottom: 10px;
     }
   }

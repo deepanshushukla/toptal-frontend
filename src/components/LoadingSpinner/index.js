@@ -1,42 +1,46 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types'
+import React from "react";
+import ReactDOM from "react-dom";
 
 // Components
-import { Spin } from 'antd';
+import { Spin } from "antd";
 
 // Style
-import './index.scss';
+import "./index.scss";
 
-const appRoot = document.getElementById('root');
+const appRoot = document.getElementById("root");
 
 class LoadingScreen extends React.Component {
-    constructor(props) {
-        super(props);
-        this.el = document.createElement('div');
-    }
+  constructor(props) {
+    super(props);
+    this.el = document.createElement("div");
+  }
 
-    componentDidMount() {
-        appRoot.appendChild(this.el);
-    }
+  componentDidMount() {
+    appRoot.appendChild(this.el);
+  }
 
-    componentWillUnmount() {
-        appRoot.removeChild(this.el);
-    }
+  componentWillUnmount() {
+    appRoot.removeChild(this.el);
+  }
 
-    getLoadingScreen() {
-        return (
-            <div className="loadingScreenWrapper">
-                <div
-                    className='loader__position'>
-                    <Spin/>
-                </div>
-            </div>
-        );
-    }
+  getLoadingScreen() {
+    return (
+      <div className="loadingScreenWrapper">
+        <div className="loader__position">
+          <Spin />
+        </div>
+      </div>
+    );
+  }
 
-    render() {
-        return ReactDOM.createPortal(this.getLoadingScreen(), this.el);
-    }
+  render() {
+    return ReactDOM.createPortal(this.getLoadingScreen(), this.el);
+  }
 }
 
 export default LoadingScreen;
+
+LoadingScreen.propTypes = {
+
+}

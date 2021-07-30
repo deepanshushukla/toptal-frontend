@@ -1,27 +1,27 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 /**
  * Hook that alerts clicks outside of the passed ref
  */
-const useOutsideClickAlert = (ref) => {
-    const [clickedOutSide, setOutSideClick] = useState(false) ;
-    useEffect(() => {
-        const  handleClickOutside = (event) => {
-            if (ref.current && !ref.current.contains(event.target)) {
-                setOutSideClick(true)
-            }
-            else {
-                setOutSideClick(false);
-            }
-        };
+const useOutsideClickAlert = (ref,cb) => {
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      console.log('called outside');
 
-        // Bind the event listener
-        document.addEventListener("click", handleClickOutside);
-        return () => {
-            // Unbind the event listener on clean up
-            document.removeEventListener("click", handleClickOutside);
-        };
-    }, [ref]);
-    return clickedOutSide;
+      if (ref.current && !ref.current.contains(event.target)) {
+        cb(true)
+      } else {
+        cb(false)
+      }
+    };
+
+    // Bind the event listener
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [ref]);
+  // console.log('clickedOutSide',clickedOutSide)
 };
-export default useOutsideClickAlert
+export default useOutsideClickAlert;

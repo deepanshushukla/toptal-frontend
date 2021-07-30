@@ -1,17 +1,16 @@
-
 .container {
   //background: #001529;
-  background: url('../../images/background.png') no-repeat center center fixed;
+  background: url("../../images/background.png") no-repeat center center fixed;
   background-size: cover;
   width: 100%;
-  & .ant-spin-dot-item{
-    background-color:#ffffff ;
+  & .ant-spin-dot-item {
+    background-color: #ffffff;
   }
-  & .ant-spin-nested-loading > div > .ant-spin .ant-spin-text{
-    color:#ffffff;
+  & .ant-spin-nested-loading > div > .ant-spin .ant-spin-text {
+    color: #ffffff;
     font-size: 16px;
   }
-  & .ant-alert{
+  & .ant-alert {
     padding: 4px 14px;
   }
   & .loginWrapper {
@@ -21,8 +20,8 @@
     height: 100vh;
     display: flex;
     align-items: center;
-    & .ant-spin-nested-loading{
-      width:100%
+    & .ant-spin-nested-loading {
+      width: 100%;
     }
 
     & .loginFormContainer {
@@ -41,13 +40,13 @@
         display: flex;
         flex-wrap: wrap;
         padding-top: 15px;
-        & .inlineFormItem{
+        & .inlineFormItem {
           width: 80%;
           margin-left: auto;
           margin-right: auto;
           justify-content: space-between;
-          & .ant-row.ant-form-item{
-            width:100%
+          & .ant-row.ant-form-item {
+            width: 100%;
           }
         }
         & label {
@@ -78,6 +77,3 @@
     }
   }
 }
-
-
-

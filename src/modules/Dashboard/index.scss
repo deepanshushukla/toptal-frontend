@@ -1,12 +1,12 @@
-$containerHeight : calc(100vh - 170px) ;
-.dashbaordContainer{
-  & .ant-page-header{
+$containerHeight: calc(100vh - 170px);
+.dashbaordContainer {
+  & .ant-page-header {
     padding: 4px 24px;
   }
-  & .apartmentList .ant-list-items{
-    height: calc(100vh - 178px) !important;
+  & .apartmentList .ant-list-items {
+    height: calc(100vh - 188px) !important;
     overflow: scroll;
-   & .ant-list-item {
+    & .ant-list-item {
       padding: 0px 24px;
       margin-bottom: 8px;
     }
@@ -16,15 +16,14 @@ $containerHeight : calc(100vh - 170px) ;
     margin-top: 8px;
     text-align: right;
   }
-  & .apartmentEmpty__Container{
-    height: $containerHeight ;
+  & .apartmentEmpty__Container {
+    height: $containerHeight;
     display: flex;
     justify-content: center;
     align-items: center;
-
   }
   .title {
-    color:#000000;
+    color: #000000;
     font-size: 14px;
     font-weight: 600;
   }
